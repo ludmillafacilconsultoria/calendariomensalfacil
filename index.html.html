@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head>
+<html lang="pt-BR">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendário Fácil Consultoria</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&amp;family=Nunito+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --azul-escuro: #0c447c;
@@ -516,19 +517,19 @@
 </head>
 <body>
 
-<div id="login-screen" class="">
+<div id="login-screen">
   <div class="login-box">
     <div class="logo-area">
       <svg class="logo-svg" style="width:60px;height:60px;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="50" fill="#0c447c"></circle>
+        <circle cx="50" cy="50" r="50" fill="#0c447c"/>
         <text x="50" y="58" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="20" fill="white">FÁCIL</text>
-        <path d="M30 35 Q50 15 70 35" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"></path>
-        <circle cx="50" cy="28" r="4" fill="white"></circle>
+        <path d="M30 35 Q50 15 70 35" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="28" r="4" fill="white"/>
       </svg>
     </div>
     <h2>Calendário Fácil</h2>
     <p>Acesse como membro ou entre com sua senha de administrador</p>
-    <input type="password" id="senha-input" placeholder="Senha de administrador" onkeydown="if(event.key==='Enter')tentarLogin()">
+    <input type="password" id="senha-input" placeholder="Senha de administrador" onkeydown="if(event.key==='Enter')tentarLogin()"/>
     <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
     <button class="btn-login" onclick="tentarLogin()">Entrar como Admin</button>
     <br>
@@ -540,10 +541,10 @@
   <div class="header-logo">
     <div class="logo-svg-wrap">
       <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="50" fill="#0c447c"></circle>
+        <circle cx="50" cy="50" r="50" fill="#0c447c"/>
         <text x="50" y="57" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="19" fill="white">FÁCIL</text>
-        <path d="M32 37 Q50 18 68 37" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"></path>
-        <circle cx="50" cy="30" r="4" fill="white"></circle>
+        <path d="M32 37 Q50 18 68 37" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="30" r="4" fill="white"/>
       </svg>
     </div>
     <div>
@@ -552,7 +553,7 @@
     </div>
   </div>
   <div class="header-right">
-    <span class="badge-mode badge-admin" id="badge-modo">Admin</span>
+    <span class="badge-mode" id="badge-modo">Membro</span>
     <button class="btn-sair" onclick="sair()">Sair</button>
   </div>
 </header>
@@ -575,7 +576,7 @@
       </div>
       <div class="form-group">
         <label>Ano</label>
-        <input type="number" id="sel-ano" value="2026" min="2024" max="2030">
+        <input type="number" id="sel-ano" value="2026" min="2024" max="2030"/>
       </div>
     </div>
 
@@ -587,12 +588,12 @@
       <button class="btn-action btn-primary" onclick="aplicarConfig()">✓ Aplicar alterações</button>
       <button class="btn-action btn-secondary" onclick="baixarHTML()">⬇ Baixar HTML Atualizado</button>
       <button class="btn-action btn-secondary" onclick="document.getElementById('import-file').click()">⬆ Importar JSON</button>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importarJSON(event)">
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importarJSON(event)"/>
     </div>
   </div>
 
   <div class="cal-header">
-    <div class="cal-mes-ano" id="cal-titulo">Junho de 2026</div>
+    <div class="cal-mes-ano" id="cal-titulo">Maio de 2026</div>
     <div class="cal-nav">
       <button class="btn-nav" onclick="navMes(-1)">‹</button>
       <button class="btn-nav" onclick="navMes(1)">›</button>
@@ -609,20 +610,22 @@
     <div class="semana-header fim-semana">DOM</div>
   </div>
 
-  <div class="grid-dias" id="grid-dias"><div class="dia-cell editavel"><div class="dia-num">1</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">2</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">3</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">4</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">5</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">6</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">7</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">8</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">9</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">10</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">11</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">12</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">13</div><span class="evento-pill ev-amarelo">DIA LIVRE =)<button class="btn-del-evento">×</button></span><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">14</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">15</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">16</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">17</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">18</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">19</div><span class="evento-pill ev-verde">Evento SPARK FÁCIL<button class="btn-del-evento">×</button></span><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">20</div><span class="evento-pill ev-azul">REUNIÃO PRESENCIAL<button class="btn-del-evento">×</button></span><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">21</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">22</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">23</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">24</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">25</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">26</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">27</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">28</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">29</div><button class="btn-add-dia">+</button></div><div class="dia-cell editavel"><div class="dia-num">30</div><button class="btn-add-dia">+</button></div></div>
+  <div class="grid-dias" id="grid-dias"></div>
 
-  <div class="legenda-exibicao" id="legenda-exibicao"><span class="legenda-label">Legenda:</span><span class="legenda-chip" style="background: rgba(245, 195, 0, 0.082); border-color: rgba(245, 195, 0, 0.376);"><span class="chip-dot" style="background:#f5c300"></span><span style="color:#333;font-size:12px;font-weight:700;">Destaque</span></span><span class="legenda-chip" style="background: rgba(22, 163, 74, 0.082); border-color: rgba(22, 163, 74, 0.376);"><span class="chip-dot" style="background:#16a34a"></span><span style="color:#333;font-size:12px;font-weight:700;">Confirmado</span></span><span class="legenda-chip" style="background: rgba(55, 138, 221, 0.082); border-color: rgba(55, 138, 221, 0.376);"><span class="chip-dot" style="background:#378add"></span><span style="color:#333;font-size:12px;font-weight:700;">Informativo</span></span></div>
+  <div class="legenda-exibicao" id="legenda-exibicao">
+    <span class="legenda-label">Legenda:</span>
+  </div>
 
-  <div class="notas-rodape" id="notas-rodape" style="display: none;"><div class="nota-item"><span class="nota-asterisco">•</span><span>*100 DIAS DOS MEMBROS DO PS DE 2025 NA FÁCIL</span></div><div class="nota-item"><span class="nota-asterisco">•</span><span>**A reunião será realizada presencialmente em razão do evento da Liga UFMT FINANCE. Todos na Fácil às 13h (uniformizados com a camiseta) e, posteriormente, seguiremos para o evento, às 14h.</span></div></div>
+  <div class="notas-rodape" id="notas-rodape" style="display:none;"></div>
 </main>
 
 <div class="modal-overlay hidden" id="modal-evento">
   <div class="modal-box">
-    <div class="modal-titulo" id="modal-titulo">Adicionar evento — Dia 13</div>
+    <div class="modal-titulo" id="modal-titulo">Adicionar evento</div>
     <div class="modal-info" id="modal-info"></div>
     <div class="form-group" style="margin-bottom:12px;">
       <label>Texto do evento</label>
-      <input type="text" id="ev-texto" placeholder="Ex: Reunião presencial" maxlength="60">
+      <input type="text" id="ev-texto" placeholder="Ex: Reunião presencial" maxlength="60"/>
     </div>
     <div class="form-group" style="margin-bottom:12px;">
       <label>Cor</label>
@@ -643,9 +646,12 @@
   </div>
 </div>
 
-<div class="toast" id="toast">Aplicado!</div>
+<div class="toast" id="toast"></div>
 
-<script id="dados-embutidos">window.DADOS_INICIAIS = {"2026-4":{"eventos":{"1":[{"texto":"2:1","cor":"ev-amarelo"}],"2":[{"texto":"PRESENCIAL","cor":"ev-azul"}],"4":[{"texto":"Dia marcado","cor":"ev-vermelho"}],"9":[{"texto":"DIA LIVRE","cor":"ev-amarelo"}],"10":[{"texto":"Dia marcado","cor":"ev-amarelo"}],"13":[{"texto":"Evento","cor":"ev-laranja"}],"16":[{"texto":"PRESENCIAL + NIVER LUÍS","cor":"ev-azul"}],"18":[{"texto":"100° DIA*","cor":"ev-roxo"}],"20":[{"texto":"Evento","cor":"ev-laranja"}],"23":[{"texto":"ONLINE","cor":"ev-azul"}],"27":[{"texto":"Evento","cor":"ev-laranja"}],"30":[{"texto":"PRESENCIAL**","cor":"ev-azul"}]},"notas":["*100 DIAS DOS MEMBROS DO PS DE 2025 NA FÁCIL","**A reunião será realizada presencialmente em razão do evento da Liga UFMT FINANCE. Todos na Fácil às 13h (uniformizados com a camiseta) e, posteriormente, seguiremos para o evento, às 14h."]},"2026-5":{"eventos":{"13":[{"texto":"DIA LIVRE =)","cor":"ev-amarelo"}],"19":[{"texto":"Evento SPARK FÁCIL","cor":"ev-verde"}],"20":[{"texto":"REUNIÃO PRESENCIAL","cor":"ev-azul"}]},"notas":[]}};</script>
+<script id="dados-embutidos">
+  // Esta variável será injetada com os dados reais ao baixar o arquivo
+  window.DADOS_INICIAIS = null;
+</script>
 
 <script>
 const SENHA = "facil2026";
@@ -953,5 +959,5 @@ document.getElementById("sel-mes").addEventListener("change", (e) => {
   renderizar();
 });
 </script>
-
-</body></html>
+</body>
+</html>
