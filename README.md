@@ -1,1 +1,963 @@
-# CALEND-RIO---F-CIL-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendário Fácil Consultoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul-escuro: #0c447c;
+    --azul-medio: #185fa5;
+    --azul-claro: #378add;
+    --azul-suave: #b5d4f4;
+    --azul-palido: #e6f1fb;
+    --cinza-claro: #f4f6f9;
+    --cinza-borda: #dce3ed;
+    --texto-principal: #1a2b42;
+    --texto-secundario: #5a7090;
+    --branco: #ffffff;
+    --amarelo: #f5c300;
+    --amarelo-bg: #fffbe6;
+    --laranja: #e8820c;
+    --laranja-bg: #fff3e6;
+    --vermelho: #c0392b;
+    --vermelho-bg: #fdecea;
+    --roxo: #7c3aed;
+    --roxo-bg: #f3eeff;
+    --verde: #16a34a;
+    --verde-bg: #e6f4ec;
+    --cinza-neutro: #6b7280;
+    --cinza-neutro-bg: #f3f4f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: linear-gradient(135deg, #e6f1fb 0%, #f4f6f9 60%, #dce3ed 100%);
+    min-height: 100vh;
+    color: var(--texto-principal);
+  }
+
+  #login-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(12,68,124,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+  }
+  #login-screen.hidden { display: none; }
+
+  .login-box {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 48px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(12,68,124,0.25);
+  }
+  .login-box .logo-area { margin-bottom: 24px; }
+  .login-box h2 {
+    font-family: 'Nunito', sans-serif;
+    color: var(--azul-escuro);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .login-box p {
+    color: var(--texto-secundario);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color .2s;
+    font-family: inherit;
+  }
+  .login-box input:focus { border-color: var(--azul-claro); }
+  .btn-login {
+    width: 100%;
+    padding: 13px;
+    background: var(--azul-medio);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: background .2s;
+  }
+  .btn-login:hover { background: var(--azul-escuro); }
+  .btn-membro {
+    margin-top: 12px;
+    background: none;
+    border: none;
+    color: var(--azul-claro);
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+  .login-error {
+    color: var(--vermelho);
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  header {
+    background: var(--azul-escuro);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 16px rgba(12,68,124,0.18);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-logo { display: flex; align-items: center; gap: 12px; }
+  .logo-svg-wrap { background: white; border-radius: 10px; padding: 6px 10px; display: flex; align-items: center; justify-content: center; }
+  header h1 {
+    font-family: 'Nunito', sans-serif;
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  header span.subtitle {
+    display: block;
+    font-size: 12px;
+    color: var(--azul-suave);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .badge-mode {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .badge-admin { background: #ffd700; color: #5a3c00; }
+  .badge-membro { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-sair {
+    padding: 7px 16px;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: background .2s;
+  }
+  .btn-sair:hover { background: rgba(255,255,255,0.22); }
+
+  main { max-width: 1000px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  #painel-admin {
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed var(--azul-suave);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+  #painel-admin.hidden { display: none; }
+  .admin-titulo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-titulo::before { content: "⚙️"; font-size: 18px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 13px; font-weight: 600; color: var(--texto-secundario); }
+  .form-group input, .form-group select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .2s;
+    color: var(--texto-principal);
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--azul-claro); }
+
+  .legenda-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--texto-secundario);
+    margin: 20px 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .legenda-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .legenda-chip:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.1); }
+  .chip-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  .btns-admin { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  .btn-action {
+    padding: 10px 22px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    border: none;
+    transition: background .2s, transform .1s;
+  }
+  .btn-action:active { transform: scale(.97); }
+  .btn-primary { background: var(--azul-medio); color: white; }
+  .btn-primary:hover { background: var(--azul-escuro); }
+  .btn-secondary { background: var(--cinza-claro); color: var(--texto-principal); border: 1.5px solid var(--cinza-borda); }
+  .btn-secondary:hover { background: var(--cinza-borda); }
+
+  .cal-header {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(12,68,124,0.07);
+  }
+  .cal-mes-ano {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--azul-escuro);
+    text-transform: capitalize;
+  }
+  .cal-nav { display: flex; gap: 8px; }
+  .btn-nav {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    border: 1.5px solid var(--cinza-borda);
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--azul-medio);
+    transition: background .2s, border-color .2s;
+  }
+  .btn-nav:hover { background: var(--azul-palido); border-color: var(--azul-suave); }
+
+  .grid-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    background: var(--azul-escuro);
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+  }
+  .semana-header {
+    text-align: center;
+    padding: 12px 4px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .semana-header.fim-semana { background: rgba(255,255,255,0.1); }
+
+  .grid-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    border: 1.5px solid var(--cinza-borda);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 16px rgba(12,68,124,0.08);
+  }
+
+  .dia-cell {
+    min-height: 90px;
+    padding: 8px 10px;
+    border-right: 1px solid var(--cinza-borda);
+    border-bottom: 1px solid var(--cinza-borda);
+    position: relative;
+    transition: background .15s;
+    cursor: default;
+  }
+  .dia-cell:nth-child(7n) { border-right: none; }
+  .dia-cell.vazio { background: #fafbfc; }
+  .dia-cell.fim-semana { background: #f7f9fc; }
+  .dia-cell.hoje { background: var(--azul-palido); }
+
+  .dia-num {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    color: var(--azul-escuro);
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .dia-cell.hoje .dia-num {
+    background: var(--azul-medio);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+
+  .evento-pill {
+    display: block;
+    border-radius: 6px;
+    padding: 3px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 3px;
+    line-height: 1.3;
+    word-break: break-word;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+  }
+  .evento-pill .btn-del-evento {
+    position: absolute;
+    top: 2px; right: 3px;
+    background: none; border: none;
+    cursor: pointer; font-size: 11px;
+    line-height: 1; opacity: 0.6;
+    display: none;
+  }
+  .evento-pill:hover .btn-del-evento { display: inline; }
+
+  .ev-azul { background: var(--azul-palido); color: var(--azul-escuro); border-left: 3px solid var(--azul-claro); }
+  .ev-amarelo { background: var(--amarelo-bg); color: #5a3c00; border-left: 3px solid var(--amarelo); }
+  .ev-laranja { background: var(--laranja-bg); color: #7a3800; border-left: 3px solid var(--laranja); }
+  .ev-vermelho { background: var(--vermelho-bg); color: var(--vermelho); border-left: 3px solid var(--vermelho); }
+  .ev-roxo { background: var(--roxo-bg); color: #4c1d95; border-left: 3px solid var(--roxo); }
+  .ev-verde { background: var(--verde-bg); color: #14532d; border-left: 3px solid var(--verde); }
+  .ev-cinza { background: var(--cinza-neutro-bg); color: #374151; border-left: 3px solid var(--cinza-neutro); }
+
+  .legenda-exibicao {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 22px;
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(12,68,124,0.06);
+  }
+  .legenda-label { font-size: 12px; font-weight: 700; color: var(--texto-secundario); margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .notas-rodape {
+    margin-top: 16px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 22px;
+    box-shadow: 0 2px 8px rgba(12,68,124,0.06);
+  }
+  .nota-item {
+    font-size: 13px;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .nota-asterisco { color: var(--azul-medio); font-weight: 800; flex-shrink: 0; }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(12,68,124,0.5);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 500;
+    backdrop-filter: blur(3px);
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal-box {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 440px;
+    width: 92%;
+    box-shadow: 0 20px 50px rgba(12,68,124,0.2);
+  }
+  .modal-titulo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--azul-escuro);
+    margin-bottom: 20px;
+  }
+  .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-info { font-size: 13px; color: var(--texto-secundario); margin-bottom: 14px; }
+
+  .toast {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: var(--azul-escuro);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .3s, transform .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    main { padding: 16px 12px 40px; }
+    header { padding: 12px 16px; }
+    .dia-cell { min-height: 60px; padding: 5px 6px; }
+    .semana-header { font-size: 10px; padding: 8px 2px; }
+    .dia-num { font-size: 12px; }
+    .evento-pill { font-size: 9px; padding: 2px 5px; }
+  }
+
+  .btn-add-dia {
+    display: none;
+    position: absolute;
+    bottom: 4px; right: 4px;
+    background: var(--azul-medio);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+  }
+  .dia-cell.editavel:hover .btn-add-dia { display: flex; }
+  .dia-cell.editavel:hover { background: #f0f6ff; }
+
+  .aviso-admin {
+    text-align: center;
+    font-size: 12px;
+    color: var(--azul-claro);
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  .logo-svg { width: 36px; height: 36px; }
+
+  .nota-row {
+    display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px;
+  }
+  .nota-row input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid var(--cinza-borda);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+  }
+  .btn-del-nota {
+    background: var(--vermelho-bg);
+    color: var(--vermelho);
+    border: none;
+    border-radius: 7px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .btn-add-nota {
+    background: var(--azul-palido);
+    color: var(--azul-medio);
+    border: none;
+    border-radius: 7px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="logo-area">
+      <svg class="logo-svg" style="width:60px;height:60px;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="#0c447c"/>
+        <text x="50" y="58" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="20" fill="white">FÁCIL</text>
+        <path d="M30 35 Q50 15 70 35" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="28" r="4" fill="white"/>
+      </svg>
+    </div>
+    <h2>Calendário Fácil</h2>
+    <p>Acesse como membro ou entre com sua senha de administrador</p>
+    <input type="password" id="senha-input" placeholder="Senha de administrador" onkeydown="if(event.key==='Enter')tentarLogin()"/>
+    <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
+    <button class="btn-login" onclick="tentarLogin()">Entrar como Admin</button>
+    <br>
+    <button class="btn-membro" onclick="entrarMembro()">Continuar como membro (somente leitura)</button>
+  </div>
+</div>
+
+<header>
+  <div class="header-logo">
+    <div class="logo-svg-wrap">
+      <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="#0c447c"/>
+        <text x="50" y="57" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="19" fill="white">FÁCIL</text>
+        <path d="M32 37 Q50 18 68 37" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="30" r="4" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Fácil Consultoria</h1>
+      <span class="subtitle">Plano Mensal</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="badge-mode" id="badge-modo">Membro</span>
+    <button class="btn-sair" onclick="sair()">Sair</button>
+  </div>
+</header>
+
+<main>
+  <div id="painel-admin" class="hidden">
+    <div class="admin-titulo">Painel de Administração</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mês</label>
+        <select id="sel-mes">
+          <option value="0">Janeiro</option><option value="1">Fevereiro</option>
+          <option value="2">Março</option><option value="3">Abril</option>
+          <option value="4">Maio</option><option value="5">Junho</option>
+          <option value="6">Julho</option><option value="7">Agosto</option>
+          <option value="8">Setembro</option><option value="9">Outubro</option>
+          <option value="10">Novembro</option><option value="11">Dezembro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ano</label>
+        <input type="number" id="sel-ano" value="2026" min="2024" max="2030"/>
+      </div>
+    </div>
+
+    <div class="legenda-titulo">Notas de rodapé</div>
+    <div id="notas-editor"></div>
+    <button class="btn-add-nota" onclick="addNota()">+ Adicionar nota</button>
+
+    <div class="btns-admin">
+      <button class="btn-action btn-primary" onclick="aplicarConfig()">✓ Aplicar alterações</button>
+      <button class="btn-action btn-secondary" onclick="baixarHTML()">⬇ Baixar HTML Atualizado</button>
+      <button class="btn-action btn-secondary" onclick="document.getElementById('import-file').click()">⬆ Importar JSON</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importarJSON(event)"/>
+    </div>
+  </div>
+
+  <div class="cal-header">
+    <div class="cal-mes-ano" id="cal-titulo">Maio de 2026</div>
+    <div class="cal-nav">
+      <button class="btn-nav" onclick="navMes(-1)">‹</button>
+      <button class="btn-nav" onclick="navMes(1)">›</button>
+    </div>
+  </div>
+
+  <div class="grid-semana">
+    <div class="semana-header">SEG</div>
+    <div class="semana-header">TER</div>
+    <div class="semana-header">QUA</div>
+    <div class="semana-header">QUI</div>
+    <div class="semana-header">SEX</div>
+    <div class="semana-header fim-semana">SÁB</div>
+    <div class="semana-header fim-semana">DOM</div>
+  </div>
+
+  <div class="grid-dias" id="grid-dias"></div>
+
+  <div class="legenda-exibicao" id="legenda-exibicao">
+    <span class="legenda-label">Legenda:</span>
+  </div>
+
+  <div class="notas-rodape" id="notas-rodape" style="display:none;"></div>
+</main>
+
+<div class="modal-overlay hidden" id="modal-evento">
+  <div class="modal-box">
+    <div class="modal-titulo" id="modal-titulo">Adicionar evento</div>
+    <div class="modal-info" id="modal-info"></div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Texto do evento</label>
+      <input type="text" id="ev-texto" placeholder="Ex: Reunião presencial" maxlength="60"/>
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Cor</label>
+      <select id="ev-cor">
+        <option value="ev-azul">🔵 Azul — informativo</option>
+        <option value="ev-amarelo">🟡 Amarelo — destaque</option>
+        <option value="ev-laranja">🟠 Laranja — atenção</option>
+        <option value="ev-vermelho">🔴 Vermelho — urgente / feriado</option>
+        <option value="ev-roxo">🟣 Roxo — especial</option>
+        <option value="ev-verde">🟢 Verde — confirmado</option>
+        <option value="ev-cinza">⚫ Cinza — neutro</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-action btn-primary" onclick="salvarEvento()">Adicionar</button>
+      <button class="btn-action btn-secondary" onclick="fecharModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script id="dados-embutidos">
+  // Esta variável será injetada com os dados reais ao baixar o arquivo
+  window.DADOS_INICIAIS = null;
+</script>
+
+<script>
+const SENHA = "facil2026";
+const MESES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const COR_LABELS = {
+  "ev-azul":"Informativo","ev-amarelo":"Destaque","ev-laranja":"Atenção",
+  "ev-vermelho":"Urgente","ev-roxo":"Especial","ev-verde":"Confirmado","ev-cinza":"Neutro"
+};
+const COR_DOTS = {
+  "ev-azul":"#378add","ev-amarelo":"#f5c300","ev-laranja":"#e8820c",
+  "ev-vermelho":"#c0392b","ev-roxo":"#7c3aed","ev-verde":"#16a34a","ev-cinza":"#6b7280"
+};
+
+let isAdmin = false;
+let mesAtual = 4; 
+let anoAtual = 2026;
+let diaSelecionado = null;
+
+// Tenta carregar dados do script embutido primeiro, depois do localStorage
+let dados = window.DADOS_INICIAIS || JSON.parse(localStorage.getItem("facil_cal") || "{}");
+
+function inicializarDados() {
+  const chave = "2026-4";
+  if (Object.keys(dados).length === 0) {
+    dados[chave] = {
+      eventos: {
+        "1": [{ texto: "2:1", cor: "ev-amarelo" }],
+        "2": [{ texto: "PRESENCIAL", cor: "ev-azul" }],
+        "4": [{ texto: "Dia marcado", cor: "ev-vermelho" }],
+        "18": [{ texto: "100° DIA*", cor: "ev-roxo" }],
+        "30": [{ texto: "PRESENCIAL**", cor: "ev-azul" }]
+      },
+      notas: [
+        "*100 DIAS DOS MEMBROS DO PS DE 2025 NA FÁCIL",
+        "**A reunião será realizada presencialmente..."
+      ]
+    };
+    salvarDados();
+  }
+}
+
+function salvarDados() {
+  localStorage.setItem("facil_cal", JSON.stringify(dados));
+}
+
+function getDadosMes() {
+  const chave = `${anoAtual}-${mesAtual}`;
+  if (!dados[chave]) dados[chave] = { eventos: {}, notas: [] };
+  return dados[chave];
+}
+
+function tentarLogin() {
+  const senha = document.getElementById("senha-input").value;
+  if (senha === SENHA) {
+    isAdmin = true;
+    document.getElementById("login-screen").classList.add("hidden");
+    document.getElementById("badge-modo").textContent = "Admin";
+    document.getElementById("badge-modo").className = "badge-mode badge-admin";
+    document.getElementById("painel-admin").classList.remove("hidden");
+    atualizarPainelAdmin();
+    renderizar();
+    mostrarToast("Bem-vindo, admin! 🔑");
+  } else {
+    document.getElementById("login-error").style.display = "block";
+  }
+}
+
+function entrarMembro() {
+  isAdmin = false;
+  document.getElementById("login-screen").classList.add("hidden");
+  document.getElementById("badge-modo").textContent = "Membro";
+  document.getElementById("badge-modo").className = "badge-mode badge-membro";
+  renderizar();
+}
+
+function sair() {
+  location.reload(); 
+}
+
+function navMes(delta) {
+  mesAtual += delta;
+  if (mesAtual < 0) { mesAtual = 11; anoAtual--; }
+  if (mesAtual > 11) { mesAtual = 0; anoAtual++; }
+  if (isAdmin) {
+    document.getElementById("sel-mes").value = mesAtual;
+    document.getElementById("sel-ano").value = anoAtual;
+    atualizarNotasEditor();
+  }
+  renderizar();
+}
+
+function renderizar() {
+  const dm = getDadosMes();
+  const titulo = `${MESES[mesAtual]} de ${anoAtual}`;
+  document.getElementById("cal-titulo").textContent = titulo;
+  
+  const hoje = new Date();
+  const primeiroDia = new Date(anoAtual, mesAtual, 1);
+  const totalDias = new Date(anoAtual, mesAtual + 1, 0).getDate();
+  let startDow = primeiroDia.getDay(); 
+  startDow = (startDow === 0) ? 6 : startDow - 1; 
+
+  const grid = document.getElementById("grid-dias");
+  grid.innerHTML = "";
+
+  for (let i = 0; i < startDow; i++) {
+    const cell = document.createElement("div");
+    cell.className = "dia-cell vazio";
+    grid.appendChild(cell);
+  }
+
+  for (let d = 1; d <= totalDias; d++) {
+    const cell = document.createElement("div");
+    const ehHoje = (d === hoje.getDate() && mesAtual === hoje.getMonth() && anoAtual === hoje.getFullYear());
+    cell.className = "dia-cell" + (ehHoje ? " hoje" : "") + (isAdmin ? " editavel" : "");
+
+    const numSpan = document.createElement("div");
+    numSpan.className = "dia-num";
+    numSpan.textContent = d;
+    cell.appendChild(numSpan);
+
+    const eventos = dm.eventos[String(d)] || [];
+    eventos.forEach((ev, idx) => {
+      const pill = document.createElement("span");
+      pill.className = `evento-pill ${ev.cor}`;
+      pill.textContent = ev.texto;
+      if (isAdmin) {
+        const btnDel = document.createElement("button");
+        btnDel.className = "btn-del-evento";
+        btnDel.textContent = "×";
+        btnDel.onclick = (e) => { e.stopPropagation(); removerEvento(d, idx); };
+        pill.appendChild(btnDel);
+      }
+      cell.appendChild(pill);
+    });
+
+    if (isAdmin) {
+      const btnAdd = document.createElement("button");
+      btnAdd.className = "btn-add-dia";
+      btnAdd.textContent = "+";
+      btnAdd.onclick = (e) => { e.stopPropagation(); abrirModal(d); };
+      cell.appendChild(btnAdd);
+    }
+    grid.appendChild(cell);
+  }
+  renderizarLegenda(dm);
+  renderizarNotas(dm);
+}
+
+function renderizarLegenda(dm) {
+  const coresUsadas = new Set();
+  Object.values(dm.eventos).forEach(evs => evs.forEach(ev => coresUsadas.add(ev.cor)));
+  const legendaDiv = document.getElementById("legenda-exibicao");
+  legendaDiv.innerHTML = '<span class="legenda-label">Legenda:</span>';
+  coresUsadas.forEach(cor => {
+    const chip = document.createElement("span");
+    chip.className = "legenda-chip";
+    const dot = COR_DOTS[cor];
+    chip.style.cssText = `background:${dot}15; border-color:${dot}60;`;
+    chip.innerHTML = `<span class="chip-dot" style="background:${dot}"></span><span style="color:#333;font-size:12px;font-weight:700;">${COR_LABELS[cor]}</span>`;
+    legendaDiv.appendChild(chip);
+  });
+}
+
+function renderizarNotas(dm) {
+  const notasDiv = document.getElementById("notas-rodape");
+  if (!dm.notas || dm.notas.length === 0) {
+    notasDiv.style.display = "none";
+    return;
+  }
+  notasDiv.style.display = "block";
+  notasDiv.innerHTML = dm.notas.map(n => `<div class="nota-item"><span class="nota-asterisco">•</span><span>${n}</span></div>`).join("");
+}
+
+function abrirModal(dia) {
+  diaSelecionado = dia;
+  document.getElementById("modal-titulo").textContent = `Adicionar evento — Dia ${dia}`;
+  document.getElementById("ev-texto").value = "";
+  document.getElementById("modal-evento").classList.remove("hidden");
+}
+
+function fecharModal() {
+  document.getElementById("modal-evento").classList.add("hidden");
+}
+
+function salvarEvento() {
+  const texto = document.getElementById("ev-texto").value.trim();
+  const cor = document.getElementById("ev-cor").value;
+  if (!texto) return;
+  const dm = getDadosMes();
+  const key = String(diaSelecionado);
+  if (!dm.eventos[key]) dm.eventos[key] = [];
+  dm.eventos[key].push({ texto, cor });
+  salvarDados();
+  fecharModal();
+  renderizar();
+}
+
+function removerEvento(dia, idx) {
+  const dm = getDadosMes();
+  dm.eventos[String(dia)].splice(idx, 1);
+  salvarDados();
+  renderizar();
+}
+
+function atualizarPainelAdmin() {
+  document.getElementById("sel-mes").value = mesAtual;
+  document.getElementById("sel-ano").value = anoAtual;
+  atualizarNotasEditor();
+}
+
+function atualizarNotasEditor() {
+  const dm = getDadosMes();
+  const editor = document.getElementById("notas-editor");
+  editor.innerHTML = "";
+  (dm.notas || []).forEach((nota, i) => {
+    const row = document.createElement("div");
+    row.className = "nota-row";
+    row.innerHTML = `<input type="text" value="${nota}" onchange="salvarNotasDoEditor()"><button class="btn-del-nota" onclick="delNota(${i})">×</button>`;
+    editor.appendChild(row);
+  });
+}
+
+function addNota() {
+  const dm = getDadosMes();
+  dm.notas.push("");
+  atualizarNotasEditor();
+}
+
+function delNota(idx) {
+  const dm = getDadosMes();
+  dm.notas.splice(idx, 1);
+  salvarDados();
+  atualizarNotasEditor();
+  renderizar();
+}
+
+function salvarNotasDoEditor() {
+  const dm = getDadosMes();
+  const inputs = document.querySelectorAll("#notas-editor input");
+  dm.notas = Array.from(inputs).map(inp => inp.value.trim()).filter(v => v);
+  salvarDados();
+  renderizar();
+}
+
+function aplicarConfig() {
+  mesAtual = parseInt(document.getElementById("sel-mes").value);
+  anoAtual = parseInt(document.getElementById("sel-ano").value);
+  renderizar();
+  mostrarToast("Aplicado!");
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2800);
+}
+
+// FUNÇÃO PARA BAIXAR O HTML COM DADOS EMBUTIDOS
+function baixarHTML() {
+  salvarNotasDoEditor();
+  
+  // Clona o documento atual
+  let htmlClone = document.documentElement.cloneNode(true);
+  
+  // Limpa o script de dados antigos e injeta os novos
+  const dadosInjetados = `window.DADOS_INICIAIS = ${JSON.stringify(dados)};`;
+  htmlClone.querySelector("#dados-embutidos").textContent = dadosInjetados;
+  
+  // Garante que o arquivo comece na tela de login e sem o painel admin aberto
+  htmlClone.querySelector("#login-screen").classList.remove("hidden");
+  htmlClone.querySelector("#painel-admin").classList.add("hidden");
+
+  const blob = new Blob(["<!DOCTYPE html>\n" + htmlClone.outerHTML], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Calendario_Facil_${MESES[mesAtual]}.html`;
+  a.click();
+  mostrarToast("HTML Atualizado Baixado! ⬇");
+}
+
+function importarJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      dados = JSON.parse(e.target.result);
+      salvarDados();
+      renderizar();
+      mostrarToast("Importado!");
+    } catch { mostrarToast("Erro!"); }
+  };
+  reader.readAsText(file);
+}
+
+inicializarDados();
+renderizar();
+
+document.getElementById("sel-mes").addEventListener("change", (e) => {
+  mesAtual = parseInt(e.target.value);
+  atualizarNotasEditor();
+  renderizar();
+});
+</script>
+</body>
+</html>
